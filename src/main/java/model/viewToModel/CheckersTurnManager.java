@@ -17,15 +17,17 @@ public class CheckersTurnManager implements ITurnManager {
 
 	@Override
 	public void takeTurn(IViewRequestor requestor) {
-		int row, col;
+		int obj_row, obj_col, dest_row, dest_col;
 		Piece piece;
-		System.out.println("Player, enter your move in the order row then column: ");
-
-		System.out.println("Player, enter your move in the order row then column: ");
 		sc = new Scanner(System.in);
-		row = sc.nextInt();
-		col = sc.nextInt();
-		requestor.setTokenAt(row, col, rejectCommand);
+		System.out.println("Player, enter your piece to move in the order row then column: ");
+		obj_row = sc.nextInt();
+		obj_col = sc.nextInt();
+		System.out.println("Player, enter your destination in the order row then column: ");
+		sc = new Scanner(System.in);
+		dest_row = sc.nextInt();
+		dest_col = sc.nextInt();
+		requestor.setTokenAt(dest_row, dest_col, rejectCommand);
 	}
 
 }
