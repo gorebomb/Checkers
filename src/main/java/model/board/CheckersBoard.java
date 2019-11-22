@@ -4,6 +4,7 @@ import main.java.gameIO.IGameModel;
 import main.java.model.move.IBoardStatusVisitor;
 import main.java.model.move.ICheckMoveVisitor;
 import main.java.model.move.IUndoMove;
+import main.java.model.utility.Point;
 
 /**
  * Making number 1 correspond with Player 0 and number 2 correspond with Player 1
@@ -83,16 +84,23 @@ public class CheckersBoard extends ABoardModel {
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < cells.length; j++) {
-				if((i+j) %2 ==1)
+				if((i+j) % 2 ==1)
 					cells[i][j] = 1;
 			}
 		}
 		
 		for (int i = cells.length-3; i < cells.length; i++) {
 			for (int j = 0; j < cells.length; j++) {
-				if((i+j) %2 == 1)
+				if((i+j) % 2 == 1)
 					cells[i][j] = 2;
 			}
 		}
+	}
+	
+	public boolean isValidObj(Point p)
+	{
+		//for(int i = 0; i < )
+		return true;
+		
 	}
 }

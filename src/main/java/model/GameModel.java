@@ -73,7 +73,7 @@ public final class GameModel implements IModelCombo {
 	 */
 	public GameModel(int nRows, int nCols) {
 		//boardModel = new TicTacToeBoard(nRows,nCols, this);
-		// boardModel = new OthelloBoard(nRows, nCols);
+		//boardModel = new OthelloBoard(nRows, nCols);
 		boardModel = new CheckersBoard(nRows, nCols, this);
 	}
 
