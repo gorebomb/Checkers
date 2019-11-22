@@ -1,7 +1,5 @@
 package main.java.model.modelToView;
 
-import jdk.swing.interop.SwingInterOpUtils;
-
 public class Command implements ICommand {
     @Override
     public void setTokenAt(int row, int col, int player) {
