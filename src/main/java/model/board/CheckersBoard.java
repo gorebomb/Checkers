@@ -4,7 +4,10 @@ import main.java.gameIO.IGameModel;
 import main.java.model.move.IBoardStatusVisitor;
 import main.java.model.move.ICheckMoveVisitor;
 import main.java.model.move.IUndoMove;
+import main.java.model.player.Piece;
 import main.java.model.utility.Point;
+
+import java.util.ArrayList;
 
 /**
  * Making number 1 correspond with Player 0 and number 2 correspond with Player 1
@@ -13,10 +16,12 @@ import main.java.model.utility.Point;
  * @author Courtney
  */
 public class CheckersBoard extends ABoardModel {
+	private ArrayList<Piece> pieces;
 
 	public CheckersBoard(int n, int n2, IGameModel host) {
 		super(n, n2, host);
 		// TODO Auto-generated constructor stub
+		pieces = new ArrayList<>();
 		this.reset();
 	}
 
@@ -53,7 +58,9 @@ public class CheckersBoard extends ABoardModel {
 
 	@Override
 	public boolean isValidMove(int player, int row, int col) {
-		// TODO Auto-generated method stub
+
+		//TODO pls do this thanks, need to create the piece objects first
+
 		return true;
 	}
 	
@@ -81,11 +88,13 @@ public class CheckersBoard extends ABoardModel {
 	
 	public void reset() {
 		super.reset();
+		pieces.clear();
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < cells.length; j++) {
 				if((i+j) % 2 ==1)
 					cells[i][j] = 1;
+					pieces.add(new Piece(1, i, j));
 			}
 		}
 		
@@ -93,14 +102,20 @@ public class CheckersBoard extends ABoardModel {
 			for (int j = 0; j < cells.length; j++) {
 				if((i+j) % 2 == 1)
 					cells[i][j] = 2;
+					pieces.add(new Piece(2, i, j));
 			}
 		}
 	}
 	
 	public boolean isValidObj(Point p)
 	{
-		//for(int i = 0; i < )
-		return true;
+		for(Piece pie: pieces) {
+			if(p.x == pie.getLocation().x && p.y == pie.getLocation().y) {
+				return true;
+				//TODO: needs to check the correct player's piece
+			}
+		}
+		return false;
 		
 	}
 }
