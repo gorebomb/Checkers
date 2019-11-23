@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Making number 1 correspond with Player 0 and number 2 correspond with Player 1
  * since number 0 corresponds with empty location on the board
  * 
- * @author Courtney
+ * @author Courtney, Kevin VanHorn
  */
 public class CheckersBoard extends ABoardModel {
 	private ArrayList<Piece> pieces;
@@ -65,19 +65,26 @@ public class CheckersBoard extends ABoardModel {
 	}
 	
 	public void displayBoard() {
-		System.out.println("---------------------------------");
+		System.out.println("   --------------------------------");
 		for (int i = 0; i < cells.length; i++) {
+			System.out.print(i+" ");
 			for (int j = 0; j < cells.length; j++) {
 				System.out.print("|" + digitToSymbol(cells[i][j]));
 			}
-			System.out.println("|\n---------------------------------");
+			System.out.println("|\n   --------------------------------");
 		}
 	}
 	
 	
+	/**
+	 * Converts a digit representing a piece to a symbol to be displayed.
+	 * @param digit the piece's numeric code.
+	 * 		        -1 = empty, 0 = p0:piece, 1 = p1:piece
+	 * @return the displayed symbol.
+	 */
 	private String digitToSymbol(int digit) {
-		if(digit == 1) return "{X}";
-		else if(digit == 2) return "%X%";
+		if(digit == 0) return "{X}";
+		else if(digit == 1) return "%X%";
 		else return " - ";
 	}
 	
@@ -97,20 +104,26 @@ public class CheckersBoard extends ABoardModel {
 		super.reset();
 		pieces.clear();
 		
+		// Changing default cells to -1 so player 0 can exist.
+		for (int i = 0; i < cells[0].length; i++) {
+			for (int j = 0; j < cells.length; j++) {
+				cells[i][j] = -1;
+			}
+		}
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < cells.length; j++) {
 				if((i+j) % 2 ==1)
-					cells[i][j] = 1;
-					pieces.add(new Piece(1, i, j));
+					cells[i][j] = 0;
+					pieces.add(new Piece(0, i, j));
 			}
 		}
 		
 		for (int i = cells.length-3; i < cells.length; i++) {
 			for (int j = 0; j < cells.length; j++) {
 				if((i+j) % 2 == 1)
-					cells[i][j] = 2;
-					pieces.add(new Piece(2, i, j));
+					cells[i][j] = 1;
+					pieces.add(new Piece(1, i, j));
 			}
 		}
 	}

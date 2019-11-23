@@ -25,7 +25,7 @@ import main.java.model.viewToModel.*;
  * IModelManager, and IModelCombo interface documentation.
  * Except for the setPlayers() and getPlayers() methods, see below.
  */
-public final class GameModel implements IModelCombo {
+public class GameModel implements IModelCombo {
 	/**
 	 * An abstract factory to create APlayers.   Used privately by GameModel.
 	 */
