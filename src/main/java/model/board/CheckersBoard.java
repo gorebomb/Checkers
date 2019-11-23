@@ -65,13 +65,20 @@ public class CheckersBoard extends ABoardModel {
 	}
 	
 	public void displayBoard() {
-		System.out.println("-----------------");
+		System.out.println("---------------------------------");
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells.length; j++) {
-				System.out.print("|" + cells[i][j]);
+				System.out.print("|" + digitToSymbol(cells[i][j]));
 			}
-			System.out.println("|\n-----------------");
+			System.out.println("|\n---------------------------------");
 		}
+	}
+	
+	
+	private String digitToSymbol(int digit) {
+		if(digit == 1) return "{X}";
+		else if(digit == 2) return "%X%";
+		else return " - ";
 	}
 	
 	public boolean boardContains(int player) {
@@ -89,6 +96,7 @@ public class CheckersBoard extends ABoardModel {
 	public void reset() {
 		super.reset();
 		pieces.clear();
+		
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < cells.length; j++) {
