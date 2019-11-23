@@ -8,6 +8,7 @@ import main.java.model.player.Piece;
 import main.java.model.utility.Point;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Making number 1 correspond with Player 0 and number 2 correspond with Player 1
@@ -16,12 +17,16 @@ import java.util.ArrayList;
  * @author Courtney, Kevin VanHorn
  */
 public class CheckersBoard extends ABoardModel {
-	private ArrayList<Piece> pieces;
+	private ArrayList<Piece> pieces = new ArrayList<>();
+    private HashSet<Point> validMoves = new HashSet<>();
 
 	public CheckersBoard(int n, int n2, IGameModel host) {
 		super(n, n2, host);
-		// TODO Auto-generated constructor stub
-		pieces = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n2; j++) {
+				pieces.add(new Piece(0, i, j));
+			}
+		}
 		this.reset();
 	}
 
@@ -58,11 +63,82 @@ public class CheckersBoard extends ABoardModel {
 
 	@Override
 	public boolean isValidMove(int player, int row, int col) {
-
 		//TODO pls do this thanks, need to create the piece objects first
 
 		return true;
 	}
+	
+	private void updateValidMoves(int player){
+		for (Piece pie: pieces) {
+	        ArrayList<Integer> movements = new ArrayList<Integer>();
+	        int enemy = -1;
+	
+	        if (player == 1) {
+	            enemy = 2;
+	            movements.add(1);
+	            if (pie.isKing()) {
+	                movements.add(-1);
+	            }
+	        }
+	        else {
+	            enemy = 1;
+	            movements.add(-1);
+	            if (pie.isKing()) {
+	                movements.add(1);
+	            }
+	        }
+	
+	        for (int movement : movements) {
+	            int mRow = (int) pie.getLocation().getX() + movement;
+	            int mCol = (int) pie.getLocation().getY() + 1;
+	            Point mid = new Point(mRow, mCol);
+	        /*
+	        |_|_|o|_|_|
+		    |_|_|_|m|_|
+		    |_|_|_|_|_|
+	        */
+	            if (cells[mRow][mCol] == 0) {
+	                validMoves.add(mid);
+	            } else {
+	        /*
+	        |_|_|o|_|_|
+		    |_|_|_|m|_|
+		    |_|_|_|_|d|
+	        */
+	                int dRow = (int) pie.getLocation().getX() + (movement * 2);
+	                int dCol = (int) pie.getLocation().getY() + 2;
+	                Point dest = new Point(dRow, dCol);
+	                if (cells[mRow][mCol] == enemy && cells[dRow][dCol] == 0) {
+	                    validMoves.add(dest);
+	                }
+	            }
+	            mRow = (int) pie.getLocation().getX() + movement;
+	            mCol = (int) pie.getLocation().getY() - 1;
+	            mid = new Point(mRow, mCol);
+	        /*
+	        |_|_|o|_|_|
+		    |_|m|_|_|_|
+		    |_|_|_|_|_|
+	        */
+	            if (cells[mRow][mCol] == 0) {
+	                validMoves.add(mid);
+	            } else {
+	        /*
+	        |_|_|o|_|_|
+		    |_|m|_|_|_|
+		    |d|_|_|_|_|
+	        */
+	                int dRow = (int) pie.getLocation().getX() + (movement * 2);
+	                int dCol = (int) pie.getLocation().getY() - 2;
+	                Point dest = new Point(dRow, dCol);
+	                if (cells[mRow][mCol] == enemy && cells[dRow][dCol] == 0) {
+	                    validMoves.add(dest);
+	                }
+	            }
+	        }
+	        System.out.println(validMoves.toString());
+		}
+    }
 	
 	public void displayBoard() {
 		System.out.println("   --------------------------------");
@@ -128,12 +204,11 @@ public class CheckersBoard extends ABoardModel {
 		}
 	}
 	
-	public boolean isValidObj(Point p)
+	public boolean isValidObj(Point p, int player)
 	{
 		for(Piece pie: pieces) {
-			if(p.x == pie.getLocation().x && p.y == pie.getLocation().y) {
+			if(pie.getPlayer() == player && p.x == pie.getLocation().x && p.y == pie.getLocation().y) {
 				return true;
-				//TODO: needs to check the correct player's piece
 			}
 		}
 		return false;
